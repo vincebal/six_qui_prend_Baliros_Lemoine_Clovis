@@ -11,7 +11,15 @@
          <children>
             <Button layoutX="49.0" layoutY="408.0" mnemonicParsing="false" onAction="#car" text="Jeu joueur 1" />
             <Button layoutX="49.0" layoutY="433.0" mnemonicParsing="false" onAction="#car1" text="Jeu joueur 2" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@taureau.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
          </children>
       </Pane>
    </left>
