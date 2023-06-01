@@ -2,14 +2,24 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="720.0" prefWidth="1180.0" style="-fx-background-color: red;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fx.HelloController">
+<BorderPane prefHeight="720.0" prefWidth="1180.0" style="-fx-background-color: blue;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.fx.HelloController">
    <left>
       <Pane BorderPane.alignment="CENTER">
          <children>
             <Button layoutX="49.0" layoutY="408.0" mnemonicParsing="false" onAction="#car" text="Jeu joueur 1" />
             <Button layoutX="49.0" layoutY="433.0" mnemonicParsing="false" onAction="#car1" text="Jeu joueur 2" />
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@taureau.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
          </children>
       </Pane>
    </left>
@@ -29,7 +39,10 @@
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem mnemonicParsing="false" text="Close">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                     </graphic></MenuItem>
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Edit">
