@@ -11,42 +11,44 @@ import java.util.Scanner;
 import static com.example.fx.joueurs.joueurs.joueurs;
 import static com.example.fx.object.Card.Allcarte;
 import static com.example.fx.object.Card.cartes;
+import lombok.*;
+@Getter@Setter
 
 
 public class Method {
     static Scanner sc = new Scanner(System.in);
-    public static Card Card0 = new Card(0, 0);
+    public static Card Card0;
     public static int nbr_joueur;
     public static Card[][] rangees ;
-    public static void afficher_plus_petit(List<Integer> liste) {//Permet de savoir quel joueur à le moins de taureau
-        int minimum = liste.get(0);
+    public static void afficherElementPlusPetit(List<Integer> liste) {
+        int min = liste.get(0);
         int position = 0;
         for (int i = 1; i < liste.size(); i++) {
-            if (liste.get(i) < minimum) {
-                minimum = liste.get(i);
+            if (liste.get(i) < min) {
+                min = liste.get(i);
                 position = i;
             }
         }
-        System.out.println("Le joueur numéro " + (position+1) + " à gagné!BRAVO! il a un score de : " + minimum );
+        System.out.println("Le joueur " + (position+1) + " à gagné!! avec un score de : " + min );
     }
-    public static void afficher_plus_grand(List<Integer> liste) {//Permet de savoir quel joueur à le plus de taureaux
-        int maximum = liste.get(0);
+    public static void afficherElementPlusGrand(List<Integer> liste) {
+        int max = liste.get(0);
         int position = 0;
         for (int i = 1; i < liste.size(); i++) {
-            if (liste.get(i) > maximum) {
-                maximum = liste.get(i);
+            if (liste.get(i) > max) {
+                max = liste.get(i);
                 position = i;
             }
         }
-        System.out.println("Le joueur numéro " + (position+1) + " à perdu!BOOOOOh! il a un score de : " + maximum);
+        System.out.println("Le joueur " + (position+1) + " à perdu avec un score de : " + max);
     }
-    public static void show(int i){//Permet de voir dans la console la main du joueur
+    public static void show(int i){
         System.out.println("\nMain Joueur " + (i + 1) + " : \n");
         for (int j =0;j<joueurs.get(i).size();j++) {
             System.out.println((j+1) + ". num Carte : " + joueurs.get(i).get(j).getNum_card() + "          nbr taureau : " + joueurs.get(i).get(j).getNbrTaureau());
         }
     }
-    public static void Initplateau() {//on fait un tableau à 4 colonnes de 6 rangées car après la 6e carte posée, le joueur ramasse tout
+    public static void Initplateau() {
         rangees = new Card[6][4];
         Intelligence_Artificielle.rangeesV = new Card[6][4];
 
@@ -58,6 +60,13 @@ public class Method {
     }
     public static void plateau(){
         String plateau="";
+
+
+
+
+
+
+
         method.clearConsole();
         method.printLine(50);
         System.out.println("Pile de carte :");

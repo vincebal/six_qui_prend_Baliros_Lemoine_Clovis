@@ -1,9 +1,19 @@
 package com.example.fx.mechanic;
 
 import com.example.fx.AI.Intelligence_Artificielle;
+import com.example.fx.HelloApplication;
 import com.example.fx.method;
 import com.example.fx.object.Card;
 
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,101 +25,104 @@ import static com.example.fx.mechanic.tour.game;
 import static com.example.fx.object.Card.cartes;
 
 public class Start {
-    public static void regles(){
-        method.printTitle("Regles du jeu :");
-        System.out.println(
+    private static Stage primaryStage;
+    public static int ia;
+
+    public Start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
+    public static void regle() {
+        method.printTitle("Regle du jeu :");
+        String regles =
                 "Nombre de joueurs : 2 à 10 joueurs\n" +
                         "\n" +
-                        "Le ut du jeu est d'éviter de ramasser des têtes de bœufs présentent sur les cartes. Le joueur ayant ramassé le moins de ses têtes gagne la partie.\n" +
+                        "But du jeu : Éviter de ramasser des têtes de bœufs (représentées par des cartes) qui ont une valeur en points. Le joueur avec le moins de points à la fin de la partie gagne.\n" +
                         "\n" +
-                        "Comment le jeuse passe-t-il? :\n" +
+                        "Déroulement du jeu :\n" +
                         "\n" +
-                        "1 . Chaque joueur doit recevoir 10 cartes.\n" +
-                        "2 . On place quatre cartes au centre de la table pour commencer le jeu(ce sera notre plateau).\n" +
-                        "3 . Chaque joueur choisi une carte de sa main et la placent face cachée sur la table.\n" +
-                        "4 . Lorsque tous les joueurs ont choisi leur carte, ils la révèlent en même temps.\n" +
-                        "5 . On place alors les cartes sur la table par  ordre croissant en respectant les règles suivantes :\n" +
-                        "\n\n     - Les cartes doivent être placées sur la même ligne que la carte qui a la plus petite valeur et doit être inférieure à la carte la plus grande.\n" +
-                        "\n     - Si une carte est supérieure à toutes les cartes sur la table, elle doit commencer une nouvelle ligne.\n" +
-                        "\n     - Si une carte est égale à une ou plusieurs cartes sur la table, elle doit être placée à droite de ces cartes.\n\n" +
-                        "6 . LOrsqu'un joueur est contraint de placer sa carte sur une colomme qui compte déjà 6 cartes, il devra ramasser les cartes de la colomme et donc les taureaux.\n" +
-                        "7 . On recommence ce processus jusqu'à ce que les joueurs n'ai plus de cartes.\n" +
-                        "8 . La partie est maintenant finie, il ne reste plus qu'à savoir qui à le moins de têtes de taureaux! \n\n");
+                        "1. Distribuez 10 cartes à chaque joueur.\n" +
+                        "2. Placez quatre cartes au centre de la table pour commencer le jeu.\n" +
+                        "3. Les joueurs choisissent une carte de leur main et la placent face cachée sur la table.\n" +
+                        "4. Lorsque tous les joueurs ont choisi leur carte, ils la révèlent simultanément.\n" +
+                        "5. Les cartes sont alors placées sur la table en ordre croissant (de la plus petite à la plus grande) en respectant les règles suivantes :\n\n" +
+                        "   - Les cartes doivent être placées sur la même ligne que la carte qui a la plus petite valeur et doit être inférieure à la carte la plus grande.\n\n" +
+                        "   - Si une carte est supérieure à toutes les cartes sur la table, elle doit commencer une nouvelle ligne.\n\n" +
+                        "   - Si une carte est égale à une ou plusieurs cartes sur la table, elle doit être placée à droite de ces cartes.\n\n" +
+                        "6. Si un joueur doit placer sa carte sur une ligne qui a déjà six cartes, il doit prendre la ligne complète et toutes les cartes de la ligne sont ajoutées à sa pile de têtes de bœufs.\n" +
+                        "7. Les joueurs répètent ce processus pour chaque tour jusqu'à ce que toutes les cartes de la main de chaque joueur soient jouées.\n" +
+                        "8. La partie se termine lorsque la dernière carte est jouée. Les joueurs comptent alors les points de leurs têtes de bœufs. Chaque tête de bœuf vaut de 1 à 7 points, selon le numéro de la carte. Le joueur avec le moins de points gagne la partie.\n\n";
+
         method.enterContinue();
         method.clearConsole();
     }
 
-    public static void start(){
-
+    public static void start() throws IOException {
         Random random = new Random();
-        Card.cart();
         // Mélanger les cartes
-        Collections.shuffle(cartes);//MELANGER
-
-        System.out.println("Nombre de joueur :");
-        int nbr_joueur= sc.nextInt();
-        System.out.println("voulez-vous intégrer une IA à la partie? :" +
-                "1. yes       2. no");
-        int ia=method.scInt("->",2);
-
-
-        // Distribuer les cartes aux joueurs
+        Collections.shuffle(cartes);
         for (int i = 0; i < nbr_joueur; i++) {
             main = new ArrayList<>();
-            trash = new ArrayList<>();
+            mainFx = new ArrayList<>();
+            bin = new ArrayList<>();
             joueurs.add(main);
-            joueursPli.add(trash);
+            joueursPli.add(bin);
             Intelligence_Artificielle.pliJoueurV.add(Intelligence_Artificielle.trashV);
         }
-        if (ia==1){
+        if (ia == 1) {
             joueurs.add(Intelligence_Artificielle.mainordi);
-            joueursPli.add(Intelligence_Artificielle.orditrash);
-            Intelligence_Artificielle.pliJoueurV.add(Intelligence_Artificielle.orditrashV);
+            joueursPli.add(Intelligence_Artificielle.orditrashV);
+            Intelligence_Artificielle.pliJoueurV.add(Intelligence_Artificielle.mainordi);
         }
 
-        for (int j = 0; j < 10; j++) {// DISTRIBUTION des cartes
+        for (int j = 0; j < 10; j++) {
             method.printLine(20);
-            for (int i = 0; i <=joueurs.size()-1; i++) {
+            for (int i = 0; i <= joueurs.size() - 1; i++) {
                 joueurs.get(i).add(cartes.get(0));
                 cartes.remove(cartes.get(0));
                 show(i);
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+
             }
             method.printLine(20);
             method.clearConsole();
         }
         Intelligence_Artificielle.restCarte();
-        for (int i = 0; i <joueurs.size() ; i++) {
-            show(i);
-        }
-        System.out.println();
 
+        System.out.println();
     }
-    public static void GameLogic(){
+
+    public static void GameLogic() {
+        Random random = new Random();
         // Jouer au  jeu
         init();
-        while (joueurs.get(joueurs.size()-1).size()!=0) {
+        while (joueurs.get(joueurs.size() - 1).size() != 0) {
             game();
         }
-        List<Integer> Score = new ArrayList<>();;
-        for (int i = 0;i<joueurs.size();i++){
+        List<Integer> scores = new ArrayList<>();
+        for (int i = 0; i < joueurs.size(); i++) {
             int point = 0;
-            for (int j = 0; j<joueursPli.get(i).size();j++){
+            for (int j = 0; j < joueursPli.get(i).size(); j++) {
                 point += joueursPli.get(i).get(j).getNbrTaureau();
             }
-            Score.add(point);
-            System.out.println("Nombre de taureau joueur numéro " + i + " : " + point);
+            scores.add(point);
+            System.out.println("Nombre de taureaux pour le joueur " + i + " : " + point);
         }
         method.enterContinue();
         method.clearConsole();
         method.printLine(40);
-        afficher_plus_petit(Score);
-        afficher_plus_grand(Score);
+        afficherElementPlusPetit(scores);
+        afficherElementPlusGrand(scores);
         method.printLine(40);
+    }
 
+    private static void showAlert(String message) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.initOwner(primaryStage);
+            alert.setTitle("Regle du jeu");
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.showAndWait();
+        });
     }
 }
