@@ -21,17 +21,28 @@ import java.util.Random;
 
 import static com.example.fx.joueurs.joueurs.*;
 import static com.example.fx.mechanic.Method.*;
-import static com.example.fx.mechanic.tour.game;
+import static com.example.fx.mechanic.Tour.game;
 import static com.example.fx.object.Card.cartes;
 
+/**
+ * Classe de démarrage du jeu.
+ */
 public class Start {
     private static Stage primaryStage;
     public static int ia;
 
+    /**
+     * Constructeur de la classe Start.
+     *
+     * @param primaryStage Première scène.
+     */
     public Start(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
+    /**
+     * Affiche les règles du jeu.
+     */
     public static void regle() {
         method.printTitle("Regle du jeu :");
         String regles =
@@ -57,6 +68,11 @@ public class Start {
         method.clearConsole();
     }
 
+    /**
+     * Démarre le jeu en initialisant les cartes et les joueurs.
+     *
+     * @throws IOException En cas d'erreur lors du chargement de la scène.
+     */
     public static void start() throws IOException {
         Random random = new Random();
         // Mélanger les cartes
@@ -91,9 +107,12 @@ public class Start {
         System.out.println();
     }
 
+    /**
+     * Gère les tours et calcule les scores.
+     */
     public static void GameLogic() {
         Random random = new Random();
-        // Jouer au  jeu
+        // Jouer au jeu
         init();
         while (joueurs.get(joueurs.size() - 1).size() != 0) {
             game();
@@ -115,6 +134,11 @@ public class Start {
         method.printLine(40);
     }
 
+    /**
+     * Affiche une alerte avec le message spécifié.
+     *
+     * @param message l'alerte.
+     */
     private static void showAlert(String message) {
         Platform.runLater(() -> {
             Alert alert = new Alert(AlertType.INFORMATION);

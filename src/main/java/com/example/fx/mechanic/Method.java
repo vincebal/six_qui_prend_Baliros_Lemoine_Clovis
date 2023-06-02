@@ -4,7 +4,6 @@ import com.example.fx.AI.Intelligence_Artificielle;
 import com.example.fx.method;
 import com.example.fx.object.Card;
 
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,12 +13,20 @@ import static com.example.fx.object.Card.cartes;
 import lombok.*;
 @Getter@Setter
 
-
+/**
+ * Classe contenant les méthodes et les fonctionnalités pour le déroulement du jeu.
+ */
 public class Method {
     static Scanner sc = new Scanner(System.in);
     public static Card Card0;
     public static int nbr_joueur;
     public static Card[][] rangees ;
+
+    /**
+     * Affiche le joueur ayant le score le plus petit dans une liste de scores.
+     *
+     * @param liste Liste des scores des joueurs.
+     */
     public static void afficherElementPlusPetit(List<Integer> liste) {
         int min = liste.get(0);
         int position = 0;
@@ -29,8 +36,14 @@ public class Method {
                 position = i;
             }
         }
-        System.out.println("Le joueur " + (position+1) + " à gagné!! avec un score de : " + min );
+        System.out.println("Le joueur " + (position+1) + " a gagné avec un score de : " + min);
     }
+
+    /**
+     * Affiche le joueur ayant le score le plus grand dans une liste de scores.
+     *
+     * @param liste Liste des scores des joueurs.
+     */
     public static void afficherElementPlusGrand(List<Integer> liste) {
         int max = liste.get(0);
         int position = 0;
@@ -40,14 +53,24 @@ public class Method {
                 position = i;
             }
         }
-        System.out.println("Le joueur " + (position+1) + " à perdu avec un score de : " + max);
+        System.out.println("Le joueur " + (position+1) + " a perdu avec un score de : " + max);
     }
+
+    /**
+     * Affiche la main d'un joueur spécifique.
+     *
+     * @param i indice du joueur.
+     */
     public static void show(int i){
         System.out.println("\nMain Joueur " + (i + 1) + " : \n");
         for (int j =0;j<joueurs.get(i).size();j++) {
             System.out.println((j+1) + ". num Carte : " + joueurs.get(i).get(j).getNum_card() + "          nbr taureau : " + joueurs.get(i).get(j).getNbrTaureau());
         }
     }
+
+    /**
+     * Initialise le plateau de jeu avec des cartes vides.
+     */
     public static void Initplateau() {
         rangees = new Card[6][4];
         Intelligence_Artificielle.rangeesV = new Card[6][4];
@@ -58,18 +81,15 @@ public class Method {
             }
         }
     }
+
+    /**
+     * Affiche le plateau de jeu avec les cartes présentes dans les rangées.
+     */
     public static void plateau(){
         String plateau="";
-
-
-
-
-
-
-
         method.clearConsole();
         method.printLine(50);
-        System.out.println("Pile de carte :");
+        System.out.println("Pile de cartes :");
 
         int code=0;
         for (int i =0;i<=rangees.length-1;i++){
@@ -103,6 +123,10 @@ public class Method {
         System.out.println(plateau);
         method.printLine(50);
     }
+
+    /**
+     * Initialise le jeu en plaçant les premières cartes dans les rangées.
+     */
     public static void init(){
         Initplateau();
         for (int i =0;i<4;i++){
@@ -112,6 +136,4 @@ public class Method {
         }
         plateau();
     }
-
-
 }

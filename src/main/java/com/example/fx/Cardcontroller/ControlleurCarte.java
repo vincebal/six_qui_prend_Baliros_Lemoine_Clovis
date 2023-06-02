@@ -27,6 +27,10 @@ public class ControlleurCarte {
 
     private static final int NUM_CARTES = 5; // Nombre de cartes dans la main
 
+    /**
+     * Démarre l'affichage de la main du joueur.
+     * @param j l'indice du joueur
+     */
     public static void start(int j) {
 
         // Création de la main du joueur
@@ -41,7 +45,13 @@ public class ControlleurCarte {
         joueurs.mainFx.add(root);
     }
 
-    // Fonction pour ajouter une carte à la main du joueur
+    /**
+     * Ajoute une carte à la main du joueur.
+     * @param mainJoueur la boîte contenant la main du joueur
+     * @param valeur la valeur de la carte à ajouter
+     * @param j l'indice du joueur
+     * @param i l'indice de la carte dans la main du joueur
+     */
     private static void ajouterCarteDansMain(HBox mainJoueur, int valeur, int j, int i) {
         Rectangle carte = new Rectangle(100,120,Color.WHITE);
         carte.setArcWidth(10);
@@ -72,6 +82,5 @@ public class ControlleurCarte {
 
         mainJoueur.getChildren().add(card);
     }
-
 
 }

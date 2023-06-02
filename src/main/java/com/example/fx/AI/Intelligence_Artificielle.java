@@ -12,6 +12,10 @@ import java.util.Random;
 import static com.example.fx.mechanic.Method.*;
 import static com.example.fx.object.Card.Allcarte;
 
+/**
+ * Contient plusieurs méthodes permettant de simuler les actions de l'IA lors d'une partie.
+ * @author  Vincent BALIROS Kenny CLOVIS Alec LEMOINE
+ */
 @Getter @Setter
 public class Intelligence_Artificielle {
 
@@ -29,6 +33,14 @@ public class Intelligence_Artificielle {
     public static List<List<Card>> pliJoueurV = new ArrayList<>();
     private static List<Integer> ScoreV = new ArrayList<>();
     private static int l;
+
+    /**
+     * Copie les éléments du tableau list2 dans le tableau list1.
+     * Utilisé pour copier les éléments de rangees dans rangeesV.
+     *
+     * @param list1 tableau de cartes de destination
+     * @param list2 tableau de cartes source
+     */
     public static void makeListIdentical(Card[][] list1, Card[][] list2) {
         for (int i = 0; i < list1.length; i++) {
             for (int j = 0; j < list1[0].length; j++) {
@@ -36,6 +48,11 @@ public class Intelligence_Artificielle {
             }
         }
     }
+
+    /**
+     * Effectue une simulation de jeu en utilisant l'algorithme du "minimax".
+     * @param profondeur la profondeur de l'arbre à explorer
+     */
     public static void tree(int profondeur){
 
         Savemouv.add(0);
@@ -56,15 +73,23 @@ public class Intelligence_Artificielle {
 
         }
     }
-    public static void restCarte(){//on créé les carte qu'il reste
+
+    /**
+     * Crée les cartes restantes dans le jeu en enlevant les cartes présentes dans la main de l'IA de la liste Allcarte.
+     */
+    public static void restCarte(){
         List<Card> main = mainordi;
         Allcarte.removeAll(main);
 
     }
+
+    /**
+     * Simule le jeu de base de l'IA à partir de son état actuel.
+     * @return le nombre total de taureaux obtenus par l'IA
+     */
     public static int GameBaseAI(){
         l=0;
         while(ordimainV.size()>0){
-
             gameV(l);
             l+=1;
         }
@@ -75,6 +100,12 @@ public class Intelligence_Artificielle {
         }
         return pointV;//le nombre de taureau
     }
+
+
+    /**
+     * Compare le pointage actuel avec le pointage minimal enregistré et met à jour les valeurs de Savemouv si le pointage actuel est inférieur au pointage minimal.
+     * @param point le pointage actuel
+     */
     private static void choixmin(int point){
         int min = Savemouv.get(2);
         if(point<min){
@@ -86,7 +117,11 @@ public class Intelligence_Artificielle {
         }
     }
 
-
+    /**
+     * Retourne l'indice de la dernière colonne non vide dans une rangée donnée.
+     * @param i l'indice de la rangée
+     * @return l'indice de la dernière colonne non vide
+     */
     public static int lastcolumnV(int i){
         int lastcolumn=5;
         while( rangeesV[lastcolumn][i].getNum_card()==0){
@@ -94,6 +129,13 @@ public class Intelligence_Artificielle {
         }
         return lastcolumn;
     }
+
+    /**
+     * Vérifie si une carte jouée par l'IA peut être placée dans une rangée spécifique.
+     * @param Cardplay la carte jouée par l'IA
+     * @param choix l'indice de la carte jouée dans la main de l'IA
+     * @return true si la carte peut être placée, sinon false
+     */
     public static boolean verificationV(Card Cardplay, int choix){
         for (int k = 0; k < 4; k++) {
             int indexLastcolumn= lastcolumnV(k);
@@ -103,6 +145,12 @@ public class Intelligence_Artificielle {
         }
         return false;
     }
+
+    /**
+     * Effectue le tour de jeu de l'IA.
+     * @param i l'indice de l'IA dans la liste des joueurs
+     * @param cardPlay la carte jouée par l'IA
+     */
     static void tourV(int i, Card cardPlay){
         int indexRangee = 0;
         int lastcolumn;
@@ -129,6 +177,13 @@ public class Intelligence_Artificielle {
             rangeesV[indexLastcol + 1][indexRangee] = cardPlay;
         }
     }
+
+    /**
+     * Ramasse les cartes d'une rangée spécifique lorsqu'elle ne peut pas jouer de carte.
+     * @param i l'indice de l'IA dans la liste des joueurs
+     * @param j l'indice de la rangée où les cartes doivent être ramassées
+     * @param cardPlay la carte jouée par l'IA
+     */
     public static void rammasserV(int i, int j, Card cardPlay){
         int indexLastcol= lastcolumnV(j);
         for (int k=0;k<=indexLastcol;k++) {
@@ -138,6 +193,11 @@ public class Intelligence_Artificielle {
         rangeesV[0][j]=cardPlay;
 
     }
+
+    /**
+     * Effectue le tour de jeu de l'IA pour chaque joueur.
+     * @param l l'indice du tour de jeu actuel
+     */
     public static void gameV(int l){
 
         int randomInput= (int) (Allcarte.size()*0.75);
@@ -175,11 +235,7 @@ public class Intelligence_Artificielle {
                 rammasserV(i, randomInputCol, Allcarte.get(randomInput));
                 SaveCard.add(Allcarte.get(randomInput));
                 Allcarte.remove(randomInput);
-
-
             }
         }
-
-
     }
 }
