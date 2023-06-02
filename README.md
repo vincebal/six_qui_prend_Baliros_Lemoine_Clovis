@@ -1,8 +1,8 @@
 # 6 qui prend
 
-Ce projet de groupe est un jeu développé en java. Il comprend une interface graphique partiellement fonctionnelle.
+Ce projet de groupe est un jeu développé en java. Il comprend une interface graphique partiellement fonctionnelle mais il est totalement fonctionnel en console.
 
-## Règles
+## Règles du jeu
 
 #### Nombre de joueurs :
 2 à 10 joueurs
